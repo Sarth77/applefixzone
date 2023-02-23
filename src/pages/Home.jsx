@@ -1,9 +1,10 @@
+/* eslint-disable no-console */
+
 import React, { useEffect, useState } from 'react'
 import DataService from "../services/services";
 
 const Home = () => {
   const [productsInfo, setproductsInfo] = useState([])
-  const [phrase,setphrase] = useState('')
 
   useEffect(() => {
     fetchProducts()
@@ -15,13 +16,6 @@ const Home = () => {
     
   }
 
-  let products;
-  let p = phrase.toLowerCase();
-  if(p){
-    products = productsInfo.filter(p => p.name.toLowerCase().includes(phrase));
-  }else{
-    products = productsInfo;
-  }
 
   const categoriesNames = [...new Set(productsInfo.map((p) => p.category))]
   return (
@@ -29,11 +23,11 @@ const Home = () => {
      <div className="px-5 pb-5 flex flex-col min-h-screen mb-20">
       {categoriesNames.map(categoryName => (
         <div key={categoryName}>
-          {products.find(p => p.category === categoryName) && (
+          {productsInfo.find(p => p.category === categoryName) && (
             <div>
               <h2 className="text-2xl py-5 capitalize">{categoryName}</h2>
               <div className="flex -mx-5 overflow-x-scroll snap-x scrollbar-hide">
-                {products.filter(p => p.category === categoryName).map(productInfo => (
+                {productsInfo.filter(p => p.category === categoryName).map(productInfo => (
                   <div className="px-5 snap-start" key={productInfo.id}>
                     <div className="w-52 flex flex-col">
                       <div className="bg-blue-100 p-5 rounded-xl">
