@@ -22,3 +22,5 @@ yarn-error.log*
 
 # eslint cache
 .eslintcache
+
+node_modules/.cache
