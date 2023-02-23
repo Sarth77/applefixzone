@@ -1,3 +1,5 @@
+/* eslint-disable */
+
 import { db,storageRef } from "../firebase";
 import { collection,getDocs,getDoc,doc } from "firebase/firestore";
 import { ref,listAll } from "firebase/storage";
