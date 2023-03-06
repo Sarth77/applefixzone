@@ -107,7 +107,7 @@ const total = subtotal + delivery ;
               <h3 className="font-bold text-lg capitalize">{pro.name}</h3>
               <p className="text-sm leading-4 text-gray-500">{pro.description}</p>
               <div className="flex">
-                <div className="grow">${pro.price}</div>
+                <div className="grow">₹{pro.price}</div>
                 <div>
                   <button onClick={() => removeProducts(pro.id)} className="border border-emerald-500 px-2 rounded-lg text-emerald-500">-</button>
                   <span className="px-2">
