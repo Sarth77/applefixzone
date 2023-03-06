@@ -10,10 +10,10 @@ const addProduct = ()=>{
     return(
         <div className="w-52 flex flex-col">
             <div className="bg-blue-100 p-5 rounded-xl">
-              <img src={picture} alt="" />
+              <img src={picture} alt={name} />
             </div>
             <div className="mt-2">
-              <h3 className="font-bold text-lg capitalize">{name}</h3>
+              <h3 className="font-bold capitalize">{name}</h3>
             </div>
             <p className="text-sm mt-1 leading-4 text-gray-500 h-20 overflow-scroll">{description}</p>
             <div className="flex mt-1">
