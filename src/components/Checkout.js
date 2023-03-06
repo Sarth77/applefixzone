@@ -1,37 +1,55 @@
-import React from 'react'
-import Footer from '../components/Footer/Footer';
-import { useContext , useEffect,useState} from "react";
-import { ProductsContext } from "../services/ProductContext";
+import { useContext, useEffect, useState } from "react";
+import Footer from "./Footer";
+import { ProductsContext } from "./Productscontext";
 import { useNavigate } from "react-router-dom";
-import DataService from "../services/services"
+import { OrdersContext } from "./Orderscontext";
+import DataService from "../services/service"
 const image = require("../images/logo-black.png");
-
-const Cart = () => {
+export default function Checkout() {
   const navigate = useNavigate();
   const { selectedProducts, setSelectedProducts } = useContext(ProductsContext)
+  const {setPurchaseOrders} = useContext(OrdersContext)
+  function hand(id){
+    setPurchaseOrders(prev => [...prev, id])
+    setSelectedProducts([]);
+    navigate('/orders');
+  }
+  function movetoOrders(arr, id) {
+    var i = 0;
+    while (i < arr.length) {
+      if (arr[i] === id) {
+        let val = arr[i];
+        setPurchaseOrders(prev => [...prev, val])
+        arr.splice(i, 1);
+      } else {
+        ++i;
+      }
+    }
+    setSelectedProducts(arr);
+  }
   const [prod, setProd] = useState([]);
   const [address, setAddress] = useState('');
   const [city, setCity] = useState('');
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
-
   useEffect(() => {
     const fetchdata = async () => {
       const uniqId = [...new Set(selectedProducts)];
-      const d = uniqId.join(',')
-        const data = await DataService.getProduct(d); 
-        if(data){
-          setProd(data)
-        }else{
-          setProd([])
-        }
+      const d = uniqId.join(',');
+      console.log(d)
+      const docSnap = await DataService.getProduct(d); 
+      if(docSnap.exists()) {
+        console.log("inside if",docSnap.data())
+        setProd(docSnap.data());
+    } else {
+      console.log("inside else")
+        setProd([])
     }
+    }
+
     fetchdata();
-    },[selectedProducts])
-  function hand(){
-    setSelectedProducts([]);
-    navigate('/cart');
-  }
+
+  }, [selectedProducts])
   function addProducts(id) {
     setSelectedProducts(prev => [...prev, id])
   }
@@ -50,7 +68,7 @@ const Cart = () => {
   if (prod.length) {
     console.log(prod.length)
     for(let id of selectedProducts){
-      const pri = prod.find(p=> p._id === id).price;
+      const pri = prod.find(p=> p.id === id).price;
       subtotal += pri ;
     }
   }
@@ -67,14 +85,13 @@ const total = subtotal + delivery ;
       <div className="rounded-xl w-24 ">
         <img className="object-cover border" src={image} alt="" />
       </div>
-      <input hidden type="text" placeholder='Search Products..' className='bg-gray-100 w-3/5 py-1 px-4 mx-4 rounded-xl' />
       <div className="mt-3 flex place-content-center">
         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="inline-block h-8 w-8 rounded-full ring-3 ring-white border -mt-1">
           <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z" />
         </svg>
       </div>
     </div>
-    <div className="p-5 overflow-scroll">
+      <div className="p-5 overflow-scroll mt-20">
         {!prod.length && (
           <div>
             No Products in your Shopping Cart
@@ -84,7 +101,7 @@ const total = subtotal + delivery ;
           <div className="flex flex-col mb-5 overflow-scroll" key={pro.id}>
             <div>
             <div className="bg-gray-100 p-3 rounded-xl shrink-0">
-              <img className="w-24" src={require(`../images/${pro.name}.png`)} alt="" />
+              <img className="w-24" src={pro.picture} alt="" />
             </div>
             <div className="pl-4">
               <h3 className="font-bold text-lg capitalize">{pro.name}</h3>
@@ -101,10 +118,13 @@ const total = subtotal + delivery ;
               </div>
             </div>
             </div>
+            <div className="p-5">
+             <button onClick={() => movetoOrders(selectedProducts,pro.id)} disabled={check}className={(more === 0 ? 'bg-emerald-500 px-5 py-2 rounded-xl font-bold shadow-emerald-300 shadow-lg text-white w-full' : 'bg-emerald-500 px-5 py-2 rounded-xl font-bold shadow-emerald-300 shadow-lg text-white w-full disabled:opacity-75 cursor-not-allowed')}>Pay ${(((pro.price)*(selectedProducts.filter(id => id === pro._id).length))+5)}</button>
+             </div>
           </div>
         ))}
       </div>
-      <div className="px-5 mt-4">
+      <div className="px-5 mt-4 ">
         <input value={name} onChange={e => setName(e.target.value)} className="bg-gray-100 w-full rounded-lg px-4 py-2 mb-2" type="text" placeholder="Name" />
         <input value={email} onChange={e => setEmail(e.target.value)} className="bg-gray-100 w-full rounded-lg px-4 py-2 mb-2" type="email" placeholder="Email Address" />
         <input value={address} onChange={e => setAddress(e.target.value)} className="bg-gray-100 w-full rounded-lg px-4 py-2 mb-2" type="text" placeholder="Street Address" />
@@ -125,11 +145,9 @@ const total = subtotal + delivery ;
         </div>
       </div>
       <div className="p-5">
-        <button onClick={()=> hand()} disabled={check}className={(more === 0 ? 'bg-emerald-500 px-5 py-2 rounded-xl font-bold shadow-emerald-300 shadow-lg text-white w-full' : 'bg-emerald-500 px-5 py-2 rounded-xl font-bold shadow-emerald-300 shadow-lg text-white w-full disabled:opacity-75 cursor-not-allowed')}>Pay ${total}</button>
+        <button onClick={()=> hand(selectedProducts)} disabled={check}className={(more === 0 ? 'bg-emerald-500 px-5 py-2 rounded-xl font-bold shadow-emerald-300 shadow-lg text-white w-full' : 'bg-emerald-500 px-5 py-2 rounded-xl font-bold shadow-emerald-300 shadow-lg text-white w-full disabled:opacity-75 cursor-not-allowed')}>Pay ${total}</button>
       </div>
-    <Footer/>
+      <Footer/>
     </div>
-  )
+  );
 }
-
-export default Cart
