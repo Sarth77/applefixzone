@@ -144,7 +144,7 @@ const total = subtotal + delivery ;
           <h3 className="font-bold">${total}</h3>
         </div>
       </div>
-      <div className="p-5">
+      <div className="p-5 mb-20">
         <button onClick={()=> hand(selectedProducts)} disabled={check}className={(more === 0 ? 'bg-emerald-500 px-5 py-2 rounded-xl font-bold shadow-emerald-300 shadow-lg text-white w-full' : 'bg-emerald-500 px-5 py-2 rounded-xl font-bold shadow-emerald-300 shadow-lg text-white w-full disabled:opacity-75 cursor-not-allowed')}>Pay ${total}</button>
       </div>
       <Footer/>
