@@ -35,27 +35,24 @@ export default function Checkout() {
   useEffect(() => {
     const fetchdata = async () => {
       const uniqId = [...new Set(selectedProducts)];
-      const d = uniqId.join(',');
-      console.log(d)
-      const docSnap = await DataService.getProduct(d); 
-      if(docSnap.exists()) {
-        console.log("inside if",docSnap.data())
-        setProd(docSnap.data());
-    } else {
-      console.log("inside else")
-        setProd([])
+      for(let i=0;i<uniqId.length;i++){
+        let d = uniqId[i];
+        const docSnap = await DataService.getProduct(d); 
+        if(docSnap.exists()) {
+          console.log("inside if",docSnap.id)
+      } else {
+        console.log("inside else")
+          setProd([])
+      }
+      }
     }
-    }
-
     fetchdata();
-
   }, [selectedProducts])
   function addProducts(id) {
     setSelectedProducts(prev => [...prev, id])
   }
   function removeProducts(id) {
     const pos = selectedProducts.indexOf(id);
-      console.log(pos,id)
     if (pos !== -1) {
       setSelectedProducts(prev => {
         return prev.filter((value, index) => index !== pos);
@@ -65,19 +62,19 @@ export default function Checkout() {
   let more = -1;
   let subtotal = 0;
   let delivery =0;
-  if (prod.length) {
-    console.log(prod.length)
-    for(let id of selectedProducts){
-      const pri = prod.find(p=> p.id === id).price;
-      subtotal += pri ;
-    }
-  }
-  let check = true;
-  if(subtotal >0){
-    delivery = 5;
-    more =0;
-    check = false;
-  }
+  // if (prod.length) {
+  //   console.log(prod.length)
+  //   for(let id of selectedProducts){
+  //     const pri = prod.find(p=> p.id === id).price;
+  //     subtotal += pri ;
+  //   }
+  // }
+  // let check = true;
+  // if(subtotal >0){
+  //   delivery = 5;
+  //   more =0;
+  //   check = false;
+  // }
 const total = subtotal + delivery ;
   return (
     <div>
@@ -99,6 +96,7 @@ const total = subtotal + delivery ;
         )}
         {prod.length && prod.map(pro => (
           <div className="flex flex-col mb-5 overflow-scroll" key={pro.id}>
+            <div></div>
             <div>
             <div className="bg-gray-100 p-3 rounded-xl shrink-0">
               <img className="w-24" src={pro.picture} alt="" />
@@ -119,7 +117,7 @@ const total = subtotal + delivery ;
             </div>
             </div>
             <div className="p-5">
-             <button onClick={() => movetoOrders(selectedProducts,pro.id)} disabled={check}className={(more === 0 ? 'bg-emerald-500 px-5 py-2 rounded-xl font-bold shadow-emerald-300 shadow-lg text-white w-full' : 'bg-emerald-500 px-5 py-2 rounded-xl font-bold shadow-emerald-300 shadow-lg text-white w-full disabled:opacity-75 cursor-not-allowed')}>Pay ${(((pro.price)*(selectedProducts.filter(id => id === pro._id).length))+5)}</button>
+             <button onClick={() => movetoOrders(selectedProducts,pro.id)} disabled className={(more === 0 ? 'bg-emerald-500 px-5 py-2 rounded-xl font-bold shadow-emerald-300 shadow-lg text-white w-full' : 'bg-emerald-500 px-5 py-2 rounded-xl font-bold shadow-emerald-300 shadow-lg text-white w-full disabled:opacity-75 cursor-not-allowed')}>Pay ${(((pro.price)*(selectedProducts.filter(id => id === pro._id).length))+5)}</button>
              </div>
           </div>
         ))}
@@ -145,7 +143,7 @@ const total = subtotal + delivery ;
         </div>
       </div>
       <div className="p-5 mb-20">
-        <button onClick={()=> hand(selectedProducts)} disabled={check}className={(more === 0 ? 'bg-emerald-500 px-5 py-2 rounded-xl font-bold shadow-emerald-300 shadow-lg text-white w-full' : 'bg-emerald-500 px-5 py-2 rounded-xl font-bold shadow-emerald-300 shadow-lg text-white w-full disabled:opacity-75 cursor-not-allowed')}>Pay ${total}</button>
+        <button onClick={()=> hand(selectedProducts)} disabled className={(more === 0 ? 'bg-emerald-500 px-5 py-2 rounded-xl font-bold shadow-emerald-300 shadow-lg text-white w-full' : 'bg-emerald-500 px-5 py-2 rounded-xl font-bold shadow-emerald-300 shadow-lg text-white w-full disabled:opacity-75 cursor-not-allowed')}>Pay ${total}</button>
       </div>
       <Footer/>
     </div>
