@@ -5,7 +5,7 @@ const Search = () => {
   return (
     <>
       <section className="px-0 py-[20px] w-full">
-        <div className="max-w-[90%] m-auto flex justify-between items-center">
+        <div className="max-w-[90%] m-auto flex justify-between items-center gap-x-4">
           <div className="flex items-center gap-x-2 justify-start">
             <NavLink to="/">
               <div className="w-[2.5rem] h-[2.5rem]">
