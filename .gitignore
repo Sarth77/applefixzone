@@ -1,8 +1,12 @@
 # See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
 
 # dependencies
+<<<<<<< HEAD
 node_modules/.cache/default-development/1.pack
 */.cache
+=======
+/node_modules/.cache
+>>>>>>> 12845ba681ff67152b635afe1a6ab1ff144003a1
 /.pnp
 .pnp.js
 
