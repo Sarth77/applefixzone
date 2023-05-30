@@ -59,6 +59,7 @@ const ContactUs = () => {
                 <div className="form-group mb-6">
                   <textarea
                     className="
+                    resize-none
             form-control
             block
             w-full

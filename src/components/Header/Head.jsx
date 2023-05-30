@@ -23,7 +23,7 @@ const Head = () => {
           </div>
           <div className="flex items-center flex-wrap">
             <div className="flex items-center justify-between">
-              <label className="mr-[30px] text-sm">Theme FAQ's</label>
+              <label className="mr-[30px] text-sm">FAQ's</label>
               <label className="mr-[30px] text-sm">Need Help</label>
               <div className="flex items-center justify-center">
                 <span>🇮🇳</span>
