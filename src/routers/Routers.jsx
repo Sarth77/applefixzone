@@ -9,6 +9,7 @@ import Login from "../pages/Login";
 import Userdetails from "../pages/User";
 import ContactUs from "../pages/ContactUs";
 import Track from "../pages/Track";
+import SignUp from "../pages/SignUp";
 
 const Routers = () => {
   return (
@@ -20,6 +21,7 @@ const Routers = () => {
       <Route path="checkout" element={<Checkout />} />
       <Route path="product/:id" element={<ProductDetails />} />
       <Route path="login" element={<Login />} />
+      <Route path="signup" element={<SignUp />} />
       <Route path="user" element={<Userdetails />} />
       <Route path="contact" element={<ContactUs />} />
       <Route path="track" element={<Track />} />
