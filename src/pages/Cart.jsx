@@ -1,11 +1,11 @@
-import React from 'react'
+import React from "react";
 
 const Cart = () => {
   return (
-    <div>
-      Cart
+    <div className="max-w-[90%] m-auto">
+      <div className="min-h-screen">Cart</div>
     </div>
-  )
-}
+  );
+};
 
-export default Cart
+export default Cart;
