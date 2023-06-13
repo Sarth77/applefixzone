@@ -17,20 +17,31 @@ export default function useAuthentication() {
   const signInCall = async (email, password) => {
     setIsLoading(true);
     try {
-      const { user } = await signInWithEmailAndPassword(auth, email, password);
-      dispatch(
-        setUser({
-          email: user.email,
-          userName: user.displayName,
-          userID: user.uid,
-          userPicture: user.photoURL,
-        }),
-      );
+      await signInWithEmailAndPassword(auth, email, password).then((user) => {
+        if (user) {
+          user.user.getIdToken().then((token) => {
+            validateGoogleToken(token).then((res) => {
+              dispatch(
+                setUser({
+                  isEmailVerified: res.data.email_verified,
+                  email: res.data.email,
+                  userName: res.data.displayName || "user",
+                  userID: res.data.uid,
+                  userPicture:
+                    res.data.picture ||
+                    "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQmJUeQCIV5gK-gudX5l3OIhRcmgnbtGDhExw&usqp=CAU",
+                }),
+              );
+            });
+          });
+        }
+      });
     } catch (error) {
       console.log(error);
       setIsError(error.code);
     } finally {
       setIsLoading(false);
+      return false;
     }
   };
 
@@ -44,10 +55,13 @@ export default function useAuthentication() {
               validateGoogleToken(token).then((res) => {
                 dispatch(
                   setUser({
+                    isEmailVerified: res.data.email_verified,
                     email: res.data.email,
-                    userName: res.data.name,
+                    userName: res.data.name || "user",
                     userID: res.data.uid,
-                    userPicture: res.data.picture,
+                    userPicture:
+                      res.data.picture ||
+                      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQmJUeQCIV5gK-gudX5l3OIhRcmgnbtGDhExw&usqp=CAU",
                   }),
                 );
               });

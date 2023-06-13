@@ -11,11 +11,11 @@ import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 const Login = () => {
   const dispatch = useDispatch();
-  const { isLoading, signInCall, setIsLoading, isError } = useAuthentication();
+  const [loading, setLoading] = useState(false);
+  const { signInCall, isError } = useAuthentication();
   const [userDetails, setUserDetails] = useState({});
   const getUserData = (e) => {
     setUserDetails({ ...userDetails, [e.target.name]: e.target.value });
-    console.log(userDetails);
   };
   const google_provider = new GoogleAuthProvider();
   useEffect(() => {
@@ -27,40 +27,51 @@ const Login = () => {
     err();
   }, [isError]);
   const validateWithGoogle = async () => {
-    setIsLoading(true);
-    await signInWithPopup(auth, google_provider).then((userCred) => {
-      if (userCred) {
-        auth.onAuthStateChanged((cred) => {
-          cred.getIdToken().then((token) => {
-            validateGoogleToken(token).then((data) => {
-              dispatch(
-                setUser({
-                  email: data.data.email,
-                  userName: data.data.name,
-                  userID: data.data.uid,
-                  userPicture: data.data.picture,
-                }),
-              );
-              setIsLoading(false);
+    setLoading(true);
+    try {
+      await signInWithPopup(auth, google_provider).then((userCred) => {
+        if (userCred) {
+          auth.onAuthStateChanged((cred) => {
+            cred.getIdToken().then((token) => {
+              validateGoogleToken(token).then((data) => {
+                dispatch(
+                  setUser({
+                    isEmailVerified: data.data.email_verified,
+                    email: data.data.email,
+                    userName: data.data.name,
+                    userID: data.data.uid,
+                    userPicture: data.data.picture,
+                  }),
+                );
+              });
             });
           });
-        });
-      }
-    });
+        }
+      });
+    } catch (error) {
+      setLoading(false);
+      toast.error(`${error.code}`);
+    } finally {
+      setLoading(false);
+    }
   };
   const handleSubmit = (e) => {
     e.preventDefault();
+    setLoading(true);
     if (userDetails?.password && userDetails?.email) {
       if (userDetails.password.length > 5) {
         signInCall(userDetails.email, userDetails.password);
+        setLoading(false);
       } else {
+        setLoading(false);
         toast.error("Password should be min 6 charater!");
       }
     } else {
+      setLoading(false);
       toast.error("Please fill all the details!");
     }
   };
-  if (isLoading) {
+  if (loading) {
     <div>Loading...</div>;
   }
   return (

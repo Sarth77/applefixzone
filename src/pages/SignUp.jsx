@@ -35,6 +35,7 @@ const SignUp = () => {
               validateGoogleToken(token).then((res) => {
                 dispatch(
                   setUser({
+                    isEmailVerified: res.data.email_verified,
                     email: res.data.email,
                     userName: res.data.name,
                     userID: res.data.uid,
