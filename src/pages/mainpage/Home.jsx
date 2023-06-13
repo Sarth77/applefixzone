@@ -1,4 +1,5 @@
 import React from "react";
+// import Categories from "../../components/Categories/Categories";
 import FeatureProducts from "../../components/FeatureProducts/FeatureProducts";
 import Slider from "./Slider";
 const Home = () => {
@@ -9,6 +10,7 @@ const Home = () => {
           <Slider />
           <FeatureProducts type="featured products" />
           <FeatureProducts type="categories" />
+          {/* <Categories /> */}
         </div>
       </section>
     </>

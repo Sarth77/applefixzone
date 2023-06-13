@@ -10,7 +10,9 @@ import Userdetails from "../pages/User";
 import ContactUs from "../pages/ContactUs";
 import Track from "../pages/Track";
 import SignUp from "../pages/SignUp";
-
+import ErrorPage from "../pages/Error";
+import AuthRedirect from "../components/auth/AuthRequire";
+import RequireAuth from "../components/auth/RequireAuth";
 const Routers = () => {
   return (
     <Routes>
@@ -20,11 +22,33 @@ const Routers = () => {
       <Route path="cart" element={<Cart />} />
       <Route path="checkout" element={<Checkout />} />
       <Route path="product/:id" element={<ProductDetails />} />
-      <Route path="login" element={<Login />} />
-      <Route path="signup" element={<SignUp />} />
-      <Route path="user" element={<Userdetails />} />
+      <Route
+        path="login"
+        element={
+          <AuthRedirect>
+            <Login />
+          </AuthRedirect>
+        }
+      />
+      <Route
+        path="signup"
+        element={
+          <AuthRedirect>
+            <SignUp />
+          </AuthRedirect>
+        }
+      />
+      <Route
+        path="/user"
+        element={
+          <RequireAuth>
+            <Userdetails />
+          </RequireAuth>
+        }
+      />
       <Route path="contact" element={<ContactUs />} />
       <Route path="track" element={<Track />} />
+      <Route path="*" element={<ErrorPage />} />
     </Routes>
   );
 };

@@ -33,7 +33,7 @@ const Card = ({ item }) => {
         <div className="w-52  flex flex-col">
           <div className="bg-blue-100 p-5 h-52 rounded-xl overflow-hidden relative flex items-center justify-center">
             {item.isNew && (
-              <span className="z-[3] absolute top-1 left-1 p-1 bg-white text-green-500 text-xs font-medium">
+              <span className="z-[3] absolute top-1 left-1 p-1 bg-white text-green-500 text-xs font-medium rounded-tl-lg">
                 New Added
               </span>
             )}

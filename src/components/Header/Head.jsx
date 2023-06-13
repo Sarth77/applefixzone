@@ -8,30 +8,30 @@ const Head = () => {
           <div className="flex justify-between flex-wrap">
             <div className="flex items-center gap-x-3">
               <i className="fa fa-phone"></i>
-              <label className="mr-[30px] text-sm">
+              <span className="mr-[30px] text-sm">
                 <a href="tel:+919711724470">+919717124470</a>
-              </label>
+              </span>
             </div>
             <div className="flex items-center gap-x-3">
               <i className="fa fa-envelope"></i>
-              <label className="text-sm">
+              <span className="text-sm">
                 <a href="mailto:support@applefixzone.com">
                   support@applefixzone.com
                 </a>
-              </label>
+              </span>
             </div>
           </div>
           <div className="flex items-center flex-wrap">
             <div className="flex items-center justify-between">
-              <label className="mr-[30px] text-sm">FAQ's</label>
-              <label className="mr-[30px] text-sm">Need Help</label>
+              <span className="mr-[30px] text-sm">FAQ's</span>
+              <span className="mr-[30px] text-sm">Need Help</span>
               <div className="flex items-center justify-center">
                 <span>🇮🇳</span>
-                <label className="mr-[30px] text-sm">EN</label>
+                <span className="mr-[30px] text-sm">EN</span>
               </div>
               <div className="flex items-center justify-center">
                 <span>🇮🇳</span>
-                <label className="mr-[30px] text-sm">INR</label>
+                <span className="mr-[30px] text-sm">INR</span>
               </div>
             </div>
           </div>

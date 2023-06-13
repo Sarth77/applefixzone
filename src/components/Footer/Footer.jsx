@@ -3,7 +3,7 @@ import paymentimage from "../../assets/payment.png";
 const Footer = () => {
   return (
     <>
-      <footer className="bottom-0 max-w-[90%] m-auto py-10 overflow-scroll">
+      <footer className="bottom-0 max-w-[90%] m-auto py-10 overflow-scroll flex flex-col">
         <div className="flex gap-[50px] justify-between">
           <div className="flex-1 flex flex-col gap-[10px] text-justify text-[14px]">
             <h1 className="text-[18px] font-bold text-gray-500">Categories</h1>

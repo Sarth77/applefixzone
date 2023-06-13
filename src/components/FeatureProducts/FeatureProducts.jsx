@@ -11,6 +11,7 @@ const FeatureProducts = ({ type }) => {
       isNew: true,
       oldPrice: 19,
       price: 12,
+      feature: true,
     },
     {
       id: 2,
@@ -26,6 +27,7 @@ const FeatureProducts = ({ type }) => {
       title: "Hat",
       oldPrice: 19,
       price: 12,
+      feature: true,
     },
     {
       id: 4,
@@ -33,6 +35,7 @@ const FeatureProducts = ({ type }) => {
       title: "Hat",
       oldPrice: 19,
       price: 12,
+      feature: true,
     },
     {
       id: 5,
@@ -56,6 +59,7 @@ const FeatureProducts = ({ type }) => {
       title: "Hat",
       oldPrice: 19,
       price: 12,
+      feature: true,
     },
   ];
   return (
