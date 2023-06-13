@@ -7,8 +7,8 @@ const navlinks = [
     display: "Home",
   },
   {
-    path: "pages",
-    display: "Pages",
+    path: "products",
+    display: "Products",
   },
   {
     path: "user",

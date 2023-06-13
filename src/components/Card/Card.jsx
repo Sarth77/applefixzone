@@ -3,33 +3,7 @@ import { Link } from "react-router-dom";
 const Card = ({ item }) => {
   return (
     <>
-      <Link to={`/product/${item.id}`}>
-        {/* <div className="w-[280px] flex flex-col gap-[10px]">
-          <div className="w-[100%] h-[400px] overflow-hidden relative">
-            {item.isNew && (
-              <span className="z-[3] absolute top-1 left-1 p-1 bg-white text-green-500 text-xs font-medium">
-                New Added
-              </span>
-            )}
-            <img
-              src={item.img}
-              alt=""
-              className="mainImg z-[1] hover:-z-[1] w-[100%] h-[100%] object-cover absolute"
-            />
-            {item.img2 && (
-              <img
-                src={item.img2}
-                alt=""
-                className="secondImg hover:z-[1] w-[100%] h-[100%] object-cover absolute"
-              />
-            )}
-          </div>
-          <h2 className="text-base font-normal">{item.title}</h2>
-          <div className="flex gap-3 text-base font-medium">
-            <h3 className="text-zinc-400 line-through">${item.oldPrice}</h3>
-            <h3>${item.price}</h3>
-          </div>
-        </div> */}
+      <Link to={`/products/${item.id}`}>
         <div className="w-52  flex flex-col">
           <div className="bg-blue-100 p-5 h-52 rounded-xl overflow-hidden relative flex items-center justify-center">
             {item.isNew && (

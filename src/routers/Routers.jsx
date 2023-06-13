@@ -1,7 +1,6 @@
 import React from "react";
 import { Routes, Route, Navigate } from "react-router-dom";
 import Home from "../pages/mainpage/Home";
-import Shop from "../pages/Shop";
 import Cart from "../pages/Cart";
 import Checkout from "../pages/Checkout";
 import ProductDetails from "../pages/ProductDetails";
@@ -13,15 +12,16 @@ import SignUp from "../pages/SignUp";
 import ErrorPage from "../pages/Error";
 import AuthRedirect from "../components/auth/AuthRequire";
 import RequireAuth from "../components/auth/RequireAuth";
+import Products from "../pages/Products";
 const Routers = () => {
   return (
     <Routes>
       <Route path="/" element={<Navigate to="home" />} />
       <Route path="home" element={<Home />} />
-      <Route path="shop" element={<Shop />} />
+      <Route path="products" element={<Products />} />
       <Route path="cart" element={<Cart />} />
       <Route path="checkout" element={<Checkout />} />
-      <Route path="product/:id" element={<ProductDetails />} />
+      <Route path="products/:id" element={<ProductDetails />} />
       <Route
         path="login"
         element={
