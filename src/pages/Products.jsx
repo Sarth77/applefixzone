@@ -36,7 +36,7 @@ const Products = () => {
     <>
       <ToastContainer />
       <div className="max-w-[90%] m-auto">
-        <div className="flex flex-wrap my-8 gap-4 justify-center">
+        <div className="flex flex-wrap my-8 gap-8 justify-center">
           {products.map((curElem) => {
             const { id, name, picture, price, description } = curElem;
             return (

@@ -1,5 +1,5 @@
 import React from "react";
-
+import { NavLink } from "react-router-dom";
 const Head = () => {
   return (
     <>
@@ -24,7 +24,9 @@ const Head = () => {
           <div className="flex items-center flex-wrap">
             <div className="flex items-center justify-between">
               <span className="mr-[30px] text-sm">FAQ's</span>
-              <span className="mr-[30px] text-sm">Need Help</span>
+              <NavLink to="/contact">
+                <span className="mr-[30px] text-sm">Need Help</span>
+              </NavLink>
               <div className="flex items-center justify-center">
                 <span>🇮🇳</span>
                 <span className="mr-[30px] text-sm">EN</span>

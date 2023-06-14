@@ -11,13 +11,17 @@ function App() {
     const unsubscribe = auth.onAuthStateChanged(async (userCred) => {
       if (userCred) {
         userCred.getIdToken().then((token) => {
-          validateGoogleToken(token).then((data) => {
+          validateGoogleToken(token).then((res) => {
+            const name = res.data.email.split("@");
             dispatch(
               setUser({
-                email: data.data.email,
-                userName: data.data.displayName,
-                userID: data.data.uid,
-                userPicture: data.data.picture,
+                isEmailVerified: res.data.email_verified,
+                email: res.data.email,
+                userName: res.data.displayName || name[0],
+                userID: res.data.uid,
+                userPicture:
+                  res.data.picture ||
+                  "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQmJUeQCIV5gK-gudX5l3OIhRcmgnbtGDhExw&usqp=CAU",
               }),
             );
           });

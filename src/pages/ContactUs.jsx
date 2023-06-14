@@ -1,6 +1,9 @@
 import React from "react";
-
+import { useSelector } from "react-redux";
+import { selectUserName, selectEmail } from "../redux/authSlice";
 const ContactUs = () => {
+  const userEmail = useSelector(selectEmail);
+  const userName = useSelector(selectUserName);
   return (
     <div className="max-w-[90%] m-auto">
       <section className="text-gray-600 body-font relative">
@@ -11,7 +14,7 @@ const ContactUs = () => {
             </h2>
           </div>
           <div className="lg:w-1/2 md:w-2/3 mx-auto">
-            <div className="flex flex-wrap">
+            <form className="flex flex-wrap" autoComplete="off">
               <div className="p-2 w-1/2">
                 <div className="relative">
                   <label
@@ -21,6 +24,9 @@ const ContactUs = () => {
                     Name
                   </label>
                   <input
+                    autoComplete="off"
+                    disabled={userName ? true : false}
+                    value={userName || ""}
                     type="text"
                     id="name"
                     name="name"
@@ -37,7 +43,8 @@ const ContactUs = () => {
                     Email
                   </label>
                   <input
-                    required
+                    disabled={userName ? true : false}
+                    value={userEmail || ""}
                     type="email"
                     id="email"
                     name="email"
@@ -62,7 +69,7 @@ const ContactUs = () => {
               </div>
               <div className="p-2 w-full">
                 <button className="flex mx-auto text-white bg-indigo-500 border-0 py-2 px-8 focus:outline-none hover:bg-indigo-600 rounded text-lg">
-                  Button
+                  Send
                 </button>
               </div>
               <div className="p-2 w-full pt-8 mt-8 border-t border-gray-200 text-center self-center">
@@ -72,11 +79,11 @@ const ContactUs = () => {
                 >
                   support@applefixzone.com
                 </a>
-                <p className="leading-normal my-5">
+                <p className="hidden leading-normal my-5">
                   49 Smith St. Saint Cloud, MN 56301
                 </p>
               </div>
-            </div>
+            </form>
           </div>
         </div>
       </section>

@@ -1,4 +1,5 @@
 import React from "react";
+import { NavLink } from "react-router-dom";
 import paymentimage from "../../assets/payment.png";
 const Footer = () => {
   return (
@@ -14,11 +15,17 @@ const Footer = () => {
           </div>
           <div className="flex-1 flex flex-col gap-[10px] text-justify text-[14px]">
             <h1 className="text-[18px] font-bold text-gray-500">Links</h1>
-            <span className="text-gray"> FAQ</span>
-            <span className="text-gray">Pages</span>
-            <span className="text-gray">Stores</span>
-            <span className="text-gray">Compare</span>
-            <span className="text-gray">Cookies</span>
+            <NavLink to="/home">
+              <span className="text-gray">Home</span>
+            </NavLink>
+            <NavLink to="/products">
+              <span className="text-gray">Products</span>
+            </NavLink>
+            <span className="text-gray">FAQ</span>
+            <span className="text-gray">About Us</span>
+            <NavLink to="/contact">
+              <span className="text-gray">Contact Us</span>
+            </NavLink>
           </div>
           <div className="hidden  md:flex flex-1 flex-col gap-[10px] text-justify text-[14px]">
             <h1 className="text-[18px] font-bold text-gray-500">About</h1>

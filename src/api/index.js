@@ -14,3 +14,12 @@ export const validateGoogleToken = async (token) => {
     return null;
   }
 };
+
+export const createUser = async (user) => {
+  try {
+    const res = await axios.post(`${baseURL}/users/create`, user);
+    return res.data;
+  } catch (error) {
+    return null;
+  }
+};

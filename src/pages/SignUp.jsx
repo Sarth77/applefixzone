@@ -13,7 +13,11 @@ const SignUp = () => {
   const dispatch = useDispatch();
   const google_provider = new GoogleAuthProvider();
   const { isLoading, signUpCall, isError } = useAuthentication();
-  const [userDetails, setUserDetails] = useState({});
+  const [userDetails, setUserDetails] = useState({
+    email: "",
+    password: "",
+    name: "",
+  });
   const getUserData = (e) => {
     setUserDetails({ ...userDetails, [e.target.name]: e.target.value });
   };
@@ -33,13 +37,16 @@ const SignUp = () => {
           auth.onAuthStateChanged((cred) => {
             cred.getIdToken().then((token) => {
               validateGoogleToken(token).then((res) => {
+                const name = res.data.email.split("@");
                 dispatch(
                   setUser({
                     isEmailVerified: res.data.email_verified,
                     email: res.data.email,
-                    userName: res.data.name,
+                    userName: res.data.name || name[0],
                     userID: res.data.uid,
-                    userPicture: res.data.picture,
+                    userPicture:
+                      res.data.picture ||
+                      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQmJUeQCIV5gK-gudX5l3OIhRcmgnbtGDhExw&usqp=CAU",
                   }),
                 );
               });
@@ -60,7 +67,7 @@ const SignUp = () => {
       userDetails?.name
     ) {
       if (userDetails.password === userDetails.password_confirmation) {
-        signUpCall(userDetails.email, userDetails.password);
+        signUpCall(userDetails);
       } else {
         toast.error("Password and ConfirmPassword should be same!");
       }

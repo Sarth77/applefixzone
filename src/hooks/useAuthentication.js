@@ -17,58 +17,45 @@ export default function useAuthentication() {
   const signInCall = async (email, password) => {
     setIsLoading(true);
     try {
-      await signInWithEmailAndPassword(auth, email, password).then((user) => {
-        if (user) {
-          user.user.getIdToken().then((token) => {
-            validateGoogleToken(token).then((res) => {
-              dispatch(
-                setUser({
-                  isEmailVerified: res.data.email_verified,
-                  email: res.data.email,
-                  userName: res.data.displayName || "user",
-                  userID: res.data.uid,
-                  userPicture:
-                    res.data.picture ||
-                    "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQmJUeQCIV5gK-gudX5l3OIhRcmgnbtGDhExw&usqp=CAU",
-                }),
-              );
-            });
-          });
-        }
-      });
+      const userCredential = await signInWithEmailAndPassword(
+        auth,
+        email,
+        password,
+      );
+      return userCredential || null;
     } catch (error) {
-      console.log(error);
-      setIsError(error.code);
+      return null;
     } finally {
       setIsLoading(false);
-      return false;
     }
   };
 
-  const signUpCall = async (email, password) => {
+  const signUpCall = async (userDetails) => {
     setIsLoading(true);
     try {
-      await createUserWithEmailAndPassword(auth, email, password).then(
-        (user) => {
-          if (user) {
-            user.user.getIdToken().then((token) => {
-              validateGoogleToken(token).then((res) => {
-                dispatch(
-                  setUser({
-                    isEmailVerified: res.data.email_verified,
-                    email: res.data.email,
-                    userName: res.data.name || "user",
-                    userID: res.data.uid,
-                    userPicture:
-                      res.data.picture ||
-                      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQmJUeQCIV5gK-gudX5l3OIhRcmgnbtGDhExw&usqp=CAU",
-                  }),
-                );
-              });
-            });
-          }
-        },
+      const res = await createUserWithEmailAndPassword(
+        auth,
+        userDetails.email,
+        userDetails.password,
       );
+      const user = res.user;
+      if (user) {
+        user.getIdToken().then((token) => {
+          validateGoogleToken(token).then((res) => {
+            dispatch(
+              setUser({
+                isEmailVerified: res.data.email_verified,
+                email: res.data.email,
+                userName: res.data.name || userDetails.name,
+                userID: res.data.uid,
+                userPicture:
+                  res.data.picture ||
+                  "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQmJUeQCIV5gK-gudX5l3OIhRcmgnbtGDhExw&usqp=CAU",
+              }),
+            );
+          });
+        });
+      }
     } catch (error) {
       console.log(error);
       setIsError(error.code);

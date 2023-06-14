@@ -1,6 +1,6 @@
 import { GoogleAuthProvider, signInWithPopup } from "firebase/auth";
 import React, { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { validateGoogleToken } from "../api";
 import { auth } from "../firebase";
 import useAuthentication from "../hooks/useAuthentication";
@@ -11,9 +11,17 @@ import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 const Login = () => {
   const dispatch = useDispatch();
+  const navitage = useNavigate();
+  const [errorMessage, setErrorMessage] = useState({
+    email: "",
+    password: "",
+  });
   const [loading, setLoading] = useState(false);
   const { signInCall, isError } = useAuthentication();
-  const [userDetails, setUserDetails] = useState({});
+  const [userDetails, setUserDetails] = useState({
+    email: "",
+    password: "",
+  });
   const getUserData = (e) => {
     setUserDetails({ ...userDetails, [e.target.name]: e.target.value });
   };
@@ -55,20 +63,79 @@ const Login = () => {
       setLoading(false);
     }
   };
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
-    if (userDetails?.password && userDetails?.email) {
-      if (userDetails.password.length > 5) {
-        signInCall(userDetails.email, userDetails.password);
+    setErrorMessage({ email: "", password: "" });
+    let validEmailRegex =
+      /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
+    if (
+      userDetails?.email !== "" &&
+      userDetails?.password !== "" &&
+      validEmailRegex.test(userDetails?.email) &&
+      userDetails?.password.length < 21 &&
+      userDetails?.password.length > 5
+    ) {
+      try {
+        const response = await signInCall(
+          userDetails.email,
+          userDetails.password,
+        );
+        if (response) {
+          response?.user.getIdToken().then((token) => {
+            validateGoogleToken(token).then((res) => {
+              const name = res.data.email.split("@");
+              dispatch(
+                setUser({
+                  isEmailVerified: res.data.email_verified,
+                  email: res.data.email,
+                  userName: res.data.displayName || name[0],
+                  userID: res.data.uid,
+                  userPicture:
+                    res.data.picture ||
+                    "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQmJUeQCIV5gK-gudX5l3OIhRcmgnbtGDhExw&usqp=CAU",
+                }),
+              );
+            });
+          });
+          setLoading(false);
+          toast.success("Logged In");
+          setTimeout(() => {
+            navitage("/");
+          }, 4000);
+        } else {
+          setUserDetails({ email: "", password: "" });
+          toast.error("User does not exists");
+        }
+      } catch (error) {
         setLoading(false);
-      } else {
-        setLoading(false);
-        toast.error("Password should be min 6 charater!");
+        if (error.message === "Firebase: Error (auth/wrong-password).") {
+          toast.error("Wrong Password");
+        } else if (error.message === "Firebase: Error (auth/user-not-found).") {
+          toast.error("User Not Found!!");
+        } else {
+          toast.error(error.message);
+        }
       }
     } else {
-      setLoading(false);
-      toast.error("Please fill all the details!");
+      if (userDetails.email === "" && userDetails.password === "") {
+        setErrorMessage({
+          email: "Please fill out this field.",
+          password: "Please fill out this field.",
+        });
+      } else if (userDetails.password === "") {
+        setErrorMessage({ email: "", password: "Please fill out this field." });
+      } else if (userDetails.email === "") {
+        setErrorMessage({
+          email: "Please fill out this field.",
+          password: "",
+        });
+      } else {
+        setErrorMessage({
+          email: "Please fill details correctly!",
+          password: "Please fill details correctly!",
+        });
+      }
     }
   };
   if (loading) {
@@ -89,13 +156,23 @@ const Login = () => {
                   >
                     Email
                   </label>
-                  <div className="flex flex-col items-start">
+                  <div className="flex flex-col items-start gap-2">
                     <input
+                      value={userDetails.email}
                       type="email"
                       name="email"
-                      className="block w-full mt-1 border-gray-300 rounded-md shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+                      className={
+                        errorMessage.email
+                          ? "block w-full mt-1 border border-red-300 outline-none rounded-md shadow-sm focus:border-red-300 focus:ring focus:ring-red-200 focus:ring-opacity-50"
+                          : "block w-full mt-1 outline-none rounded-md shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+                      }
                       onChange={getUserData}
                     />
+                    <div className={errorMessage.email ? "" : "hidden"}>
+                      <p className="text-red-500 text-xs italic">
+                        {errorMessage.email}
+                      </p>
+                    </div>
                   </div>
                 </div>
                 <div className="mt-4">
@@ -105,13 +182,23 @@ const Login = () => {
                   >
                     Password
                   </label>
-                  <div className="flex flex-col items-start">
+                  <div className="flex flex-col items-start gap-2">
                     <input
+                      value={userDetails.password}
                       type="password"
                       name="password"
-                      className="block w-full mt-1 border-gray-300 rounded-md shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+                      className={
+                        errorMessage.password
+                          ? "block w-full mt-1 border border-red-300 outline-none rounded-md shadow-sm focus:border-red-300 focus:ring focus:ring-red-200 focus:ring-opacity-50"
+                          : "block w-full mt-1 border-gray-300 outline-none rounded-md shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+                      }
                       onChange={getUserData}
                     />
+                    <div className={errorMessage.password ? "" : "hidden"}>
+                      <p className="text-red-500 text-xs italic">
+                        {errorMessage.password}
+                      </p>
+                    </div>
                   </div>
                 </div>
                 <div
