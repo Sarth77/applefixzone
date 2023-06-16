@@ -84,8 +84,8 @@ const Cart = () => {
                           <FormatPrice price={cartItem.price} />
                         </span>
                       </div>
-                      <div className="flex flex-1 items-end justify-between text-sm">
-                        <p className="text-gray-500">
+                      <div className="flex grow items-end justify-between text-sm">
+                        <p className="text-gray-500 grow">
                           <button
                             className="fill-current text-gray-600 w-3"
                             onClick={() => handleDecreaseCart(cartItem)}
