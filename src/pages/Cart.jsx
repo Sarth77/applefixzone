@@ -43,7 +43,7 @@ const Cart = () => {
               <div className="min-h-[25vh] snap-start">
                 <p>Your cart is empty !</p>
                 <NavLink to="/products">
-                  <div className="flex items-center justify-center">
+                  <div className="font-medium text-indigo-600 hover:text-indigo-500 flex items-center justify-center gap-1">
                     <BiArrowBack />
                     Go to products
                   </div>
