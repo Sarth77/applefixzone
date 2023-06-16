@@ -52,10 +52,13 @@ const Cart = () => {
             </div>
           ) : (
             <div className="flow-root">
-              <ul className="divide-y divide-gray-200 dark:divide-gray-700 overflow-scroll">
+              <ul className="divide-y divide-gray-200 dark:divide-gray-700 overflow-hidden">
                 {cart.cartItems?.map((cartItem) => (
-                  <li className="flex py-6" key={cartItem.id}>
-                    <div className="h-24 w-24 flex-shrink-0 overflow-hidden rounded-md border border-gray-200">
+                  <li
+                    className="flex lg:flex-row md:flex-row flex-col py-6 gap-4"
+                    key={cartItem.id}
+                  >
+                    <div className="h-full w-full lg:h-24 lg:w-24 md:h-24 md:w-24 flex-shrink-0 overflow-hidden rounded-md border border-gray-200 self-center ">
                       <img
                         src={cartItem.picture}
                         alt={cartItem.name}
@@ -63,7 +66,7 @@ const Cart = () => {
                       />
                     </div>
 
-                    <div className="ml-4 flex flex-1 flex-col">
+                    <div className="flex flex-1 flex-col">
                       <div>
                         <div className="flex justify-between text-base font-medium text-gray-900">
                           <h3 className="capitalize truncate">
@@ -124,9 +127,7 @@ const Cart = () => {
           )}
           <div
             className={
-              cart.cartItems.length === 0
-                ? "hidden"
-                : " flex justify-items-start mt-10 px-8"
+              cart.cartItems.length === 0 ? "hidden" : " flex self-start mt-5"
             }
           >
             <button
