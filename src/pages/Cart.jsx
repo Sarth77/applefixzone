@@ -32,18 +32,21 @@ const Cart = () => {
   return (
     <>
       <div className="snap-start max-w-[90%] m-auto py-12">
-        <div className="w-full p-4 bg-white border border-gray-200 rounded-lg shadow sm:p-8 dark:border-gray-700">
+        <div className="w-full p-4 bg-white border border-gray-200 rounded-lg shadow sm:p-8">
           <div className="flex items-center justify-between mb-4">
-            <h5 className="text-xl font-bold leading-none text-gray-900 dark:text-white">
+            <h5 className="text-xl font-bold leading-none text-gray-900">
               Shopping Cart
             </h5>
           </div>
           {cart.cartItems.length === 0 ? (
-            <div className="snap-start max-w-[90%] m-auto">
+            <div className="snap-start max-w-[90%] m-auto flex flex-col gap-4 items-center justify-center">
               <div className="min-h-[25vh] snap-start">
-                <p>your cart is empty</p>
+                <p>Your cart is empty !</p>
                 <NavLink to="/products">
-                  <div>Go to products</div>
+                  <div className="flex items-center justify-center">
+                    <BiArrowBack />
+                    Go to products
+                  </div>
                 </NavLink>
               </div>
             </div>
