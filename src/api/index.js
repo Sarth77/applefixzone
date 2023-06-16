@@ -15,9 +15,9 @@ export const validateGoogleToken = async (token) => {
   }
 };
 
-export const createUser = async (user) => {
+export const getUser = async (userId) => {
   try {
-    const res = await axios.post(`${baseURL}/users/create`, user);
+    const res = await axios.get(`${baseURL}/users/${userId}`);
     return res.data;
   } catch (error) {
     return null;

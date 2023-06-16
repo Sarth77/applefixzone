@@ -1,15 +1,14 @@
 import { GoogleAuthProvider, signInWithPopup } from "firebase/auth";
 import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { validateGoogleToken } from "../api";
 import { auth } from "../firebase";
 import useAuthentication from "../hooks/useAuthentication";
 import { useDispatch } from "react-redux";
 import { setUser } from "../redux/authSlice";
 import { toast } from "react-toastify";
-import { ToastContainer } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
+import { useVerifyUserMutation } from "../redux/api/middlewareApi";
 const Login = () => {
+  const [verifyUser, { isError }] = useVerifyUserMutation();
   const dispatch = useDispatch();
   const navitage = useNavigate();
   const [errorMessage, setErrorMessage] = useState({
@@ -17,7 +16,7 @@ const Login = () => {
     password: "",
   });
   const [loading, setLoading] = useState(false);
-  const { signInCall, isError } = useAuthentication();
+  const { signInCall } = useAuthentication();
   const [userDetails, setUserDetails] = useState({
     email: "",
     password: "",
@@ -41,14 +40,15 @@ const Login = () => {
         if (userCred) {
           auth.onAuthStateChanged((cred) => {
             cred.getIdToken().then((token) => {
-              validateGoogleToken(token).then((data) => {
+              verifyUser(token).then((res) => {
+                const data = res.data.data;
                 dispatch(
                   setUser({
-                    isEmailVerified: data.data.email_verified,
-                    email: data.data.email,
-                    userName: data.data.name,
-                    userID: data.data.uid,
-                    userPicture: data.data.picture,
+                    isEmailVerified: data.email_verified,
+                    email: data.email,
+                    userName: data.name,
+                    userID: data.uid,
+                    userPicture: data.picture,
                   }),
                 );
               });
@@ -82,18 +82,16 @@ const Login = () => {
           userDetails.password,
         );
         if (response) {
-          response?.user.getIdToken().then((token) => {
-            validateGoogleToken(token).then((res) => {
-              const name = res.data.email.split("@");
+          response.getIdToken().then((token) => {
+            verifyUser(token).then((res) => {
+              const data = res.data.data;
               dispatch(
                 setUser({
-                  isEmailVerified: res.data.email_verified,
-                  email: res.data.email,
-                  userName: res.data.displayName || name[0],
-                  userID: res.data.uid,
-                  userPicture:
-                    res.data.picture ||
-                    "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQmJUeQCIV5gK-gudX5l3OIhRcmgnbtGDhExw&usqp=CAU",
+                  isEmailVerified: data.email_verified,
+                  email: data.email,
+                  userName: data.name,
+                  userID: data.uid,
+                  userPicture: data.picture,
                 }),
               );
             });
@@ -143,7 +141,6 @@ const Login = () => {
   }
   return (
     <>
-      <ToastContainer />
       <div className="max-w-[90%] m-auto mt-6">
         <div>
           <div className="flex flex-col items-center ">

@@ -1,37 +1,42 @@
 import "./App.css";
 import Layout from "./components/Layout/Layout";
 import { auth } from "./firebase";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { setUser } from "./redux/authSlice";
 import { useEffect } from "react";
 import { validateGoogleToken } from "./api";
+import { selectUserID } from "./redux/authSlice";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 function App() {
   const dispatch = useDispatch();
+  const userId = useSelector(selectUserID);
   useEffect(() => {
-    const unsubscribe = auth.onAuthStateChanged(async (userCred) => {
-      if (userCred) {
-        userCred.getIdToken().then((token) => {
-          validateGoogleToken(token).then((res) => {
-            const name = res.data.email.split("@");
-            dispatch(
-              setUser({
-                isEmailVerified: res.data.email_verified,
-                email: res.data.email,
-                userName: res.data.displayName || name[0],
-                userID: res.data.uid,
-                userPicture:
-                  res.data.picture ||
-                  "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQmJUeQCIV5gK-gudX5l3OIhRcmgnbtGDhExw&usqp=CAU",
-              }),
-            );
+    if (!userId) {
+      const unsubscribe = auth.onAuthStateChanged(async (userCred) => {
+        if (userCred) {
+          userCred.getIdToken().then((token) => {
+            validateGoogleToken(token).then((res) => {
+              dispatch(
+                setUser({
+                  isEmailVerified: res.data.email_verified,
+                  email: res.data.email,
+                  userName: res.data.name,
+                  userID: res.data.uid,
+                  userPicture: res.data.picture,
+                }),
+              );
+            });
           });
-        });
-      }
-    });
-    return () => unsubscribe();
-  }, [dispatch]);
+        }
+      });
+      return () => unsubscribe();
+    }
+    // eslint-disable-next-line
+  }, [userId]);
   return (
     <div className="w-full">
+      <ToastContainer />
       <Layout />
     </div>
   );

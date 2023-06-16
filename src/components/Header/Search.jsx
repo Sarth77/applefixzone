@@ -6,6 +6,7 @@ import { selectUserPicture, selectIsLoggedIn } from "../../redux/authSlice";
 const Search = () => {
   const picture = useSelector(selectUserPicture);
   const loggedIn = useSelector(selectIsLoggedIn);
+  const cart = useSelector((state) => state.cart);
   const [displayPicture, setDisplayPicture] = useState(null);
   useEffect(() => {
     if (picture) {
@@ -21,7 +22,7 @@ const Search = () => {
       setDisplayPicture(null);
     }
   }, [loggedIn, picture]);
-
+  useEffect(() => {}, [cart]);
   return (
     <>
       <section className="px-0 py-[20px] w-full">
@@ -78,7 +79,7 @@ const Search = () => {
                   <Link to="/cart">
                     <i className="fa fa-shopping-bag icon icon-circle select-none"></i>
                     <span className="absolute flex top-[-20%] right-[-35%] w-[15px] h-[15px] rounded-full items-center justify-center text-[0.8rem] font-bold text-white bg-black select-none">
-                      0
+                      {cart?.cartItems?.length}
                     </span>
                   </Link>
                 </div>

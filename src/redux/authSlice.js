@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-
+import { registerUser } from "./authActions";
 const initialState = {
   isEmailVerified: false,
   isLoggedIn: false,
@@ -7,6 +7,9 @@ const initialState = {
   userName: null,
   userID: null,
   userPicture: null,
+  loading: false,
+  error: null,
+  success: false,
 };
 
 const authSlice = createSlice({
@@ -31,6 +34,23 @@ const authSlice = createSlice({
       state.userName = null;
       state.userID = null;
       state.userPicture = null;
+    },
+  },
+  extraReducers: {
+    // register user
+    [registerUser.pending]: (state) => {
+      state.loading = true;
+      state.error = null;
+    },
+    [registerUser.fulfilled]: (state, { payload }) => {
+      console.log("payload", payload);
+      state.loading = false;
+      state.success = true; // registration successful
+    },
+    [registerUser.rejected]: (state, { payload }) => {
+      console.log("errorpayload", payload);
+      state.loading = false;
+      state.error = payload;
     },
   },
 });

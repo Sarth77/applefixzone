@@ -1,18 +1,19 @@
 import { GoogleAuthProvider, signInWithPopup } from "firebase/auth";
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import { registerUser } from "../redux/authActions";
 import { auth } from "../firebase";
 import { validateGoogleToken } from "../api";
-import useAuthentication from "../hooks/useAuthentication";
+// import useAuthentication from "../hooks/useAuthentication";
 import { toast } from "react-toastify";
-import { ToastContainer } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { setUser } from "../redux/authSlice";
+import ButtonLoader from "../loader/ButtonLoader";
 const SignUp = () => {
+  // const navitage = useNavigate();
   const dispatch = useDispatch();
+  const { loading, error } = useSelector((state) => state.auth);
   const google_provider = new GoogleAuthProvider();
-  const { isLoading, signUpCall, isError } = useAuthentication();
   const [userDetails, setUserDetails] = useState({
     email: "",
     password: "",
@@ -22,14 +23,10 @@ const SignUp = () => {
     setUserDetails({ ...userDetails, [e.target.name]: e.target.value });
   };
   useEffect(() => {
-    const err = () => {
-      if (isError) {
-        toast.error(`${isError}`);
-      }
-    };
-    err();
-  }, [isError]);
-
+    if (error) {
+      toast.error(error);
+    }
+  }, [error]);
   const validateWithGoogle = async () => {
     try {
       await signInWithPopup(auth, google_provider).then((userCred) => {
@@ -58,7 +55,7 @@ const SignUp = () => {
       toast.error(`${error.code}`);
     }
   };
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     if (
       userDetails?.password &&
@@ -67,7 +64,8 @@ const SignUp = () => {
       userDetails?.name
     ) {
       if (userDetails.password === userDetails.password_confirmation) {
-        signUpCall(userDetails);
+        userDetails.email = userDetails.email.toLowerCase();
+        dispatch(registerUser(userDetails));
       } else {
         toast.error("Password and ConfirmPassword should be same!");
       }
@@ -75,13 +73,9 @@ const SignUp = () => {
       toast.error("Please fill all the details!");
     }
   };
-  if (isLoading) {
-    return <div>isLoading...</div>;
-  }
 
   return (
     <>
-      <ToastContainer />
       <div className="max-w-[90%] m-auto mt-6">
         <div className="flex flex-col items-center">
           <div className="w-full px-6 pt-6 overflow-hidden bg-white shadow-md sm:max-w-lg sm:rounded-lg">
@@ -158,10 +152,11 @@ const SignUp = () => {
               </div>
               <div className="flex items-center mt-4">
                 <button
+                  disabled={loading}
                   type="submit"
                   className="w-full px-4 py-2 tracking-wide text-white transition-colors duration-200 transform bg-purple-700 rounded-md hover:bg-purple-600 focus:outline-none focus:bg-purple-600"
                 >
-                  Register
+                  {loading ? <ButtonLoader /> : "Register"}
                 </button>
               </div>
             </form>

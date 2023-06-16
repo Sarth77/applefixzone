@@ -5,9 +5,8 @@ import {
   signInWithEmailAndPassword,
   signOut,
 } from "firebase/auth";
-import { clearUserData, setUser } from "../redux/authSlice";
+import { clearUserData } from "../redux/authSlice";
 import { auth } from "../firebase";
-import { validateGoogleToken } from "../api";
 
 export default function useAuthentication() {
   const dispatch = useDispatch();
@@ -22,7 +21,7 @@ export default function useAuthentication() {
         email,
         password,
       );
-      return userCredential || null;
+      return userCredential.user || null;
     } catch (error) {
       return null;
     } finally {
@@ -39,23 +38,7 @@ export default function useAuthentication() {
         userDetails.password,
       );
       const user = res.user;
-      if (user) {
-        user.getIdToken().then((token) => {
-          validateGoogleToken(token).then((res) => {
-            dispatch(
-              setUser({
-                isEmailVerified: res.data.email_verified,
-                email: res.data.email,
-                userName: res.data.name || userDetails.name,
-                userID: res.data.uid,
-                userPicture:
-                  res.data.picture ||
-                  "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQmJUeQCIV5gK-gudX5l3OIhRcmgnbtGDhExw&usqp=CAU",
-              }),
-            );
-          });
-        });
-      }
+      return user;
     } catch (error) {
       console.log(error);
       setIsError(error.code);
