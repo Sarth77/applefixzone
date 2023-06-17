@@ -16,6 +16,11 @@ const Cart = () => {
   useEffect(() => {
     dispatch(getTotals());
   }, [cart, dispatch]);
+
+  useEffect(() => {
+    if (cart?.cartItems?.length === 0) window.scrollTo(0, 0);
+  }, [cart]);
+
   const handleRemoveFromCart = (cartItem) => {
     dispatch(removeFromCart(cartItem));
   };

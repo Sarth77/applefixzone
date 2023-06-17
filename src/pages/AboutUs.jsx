@@ -2,10 +2,10 @@ import React from "react";
 
 const AboutUs = () => {
   return (
-    <section class="bg-white dark:bg-gray-400">
-      <div class="container px-6 py-12 mx-auto">
+    <section className="bg-white dark:bg-gray-400">
+      <div className="container px-6 py-12 mx-auto">
         <div>
-          <h3 class=" text-2xl font-medium text-blue-500 dark:text-blue-400">
+          <h3 className=" text-2xl font-medium text-blue-500 dark:text-blue-400">
             About us
           </h3>
           <ul className="my-4 gap-2 text-gray-600">

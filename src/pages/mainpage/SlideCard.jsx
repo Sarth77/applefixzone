@@ -1,4 +1,3 @@
-import Sdata from "./Sdata";
 import { useNavigate } from "react-router-dom";
 
 const SlideCard = () => {
@@ -9,13 +8,14 @@ const SlideCard = () => {
         <div className="container mx-auto flex p-6 md:flex-row flex-col items-center">
           <div className="lg:flex-grow md:w-1/2 lg:pr-24 md:pr-16 flex flex-col md:items-start md:text-left mb-16 md:mb-0 items-center text-center">
             <h1 className="title-font sm:text-4xl text-3xl mb-4 font-medium text-gray-900">
-              {Sdata[0].title}
+              20% Off For Your First Shopping!
             </h1>
             <p className="mb-8 leading-relaxed">
-              Copper mug try-hard pitchfork pour-over freegan heirloom neutra
-              air plant cold-pressed tacos poke beard tote bag. Heirloom echo
-              park mlkshk tote bag selvage hot chicken authentic tumeric
-              truffaut hexagon try-hard chambray.
+              Its right there, in the name. AppleFixZone is a home-grown online
+              brand that serves as your exclusive source of apple iPhones spare
+              parts solely in India. Our brand ultimately focus on supply of
+              original iPhone Spares like Displays, Charging Port, Batteries,
+              Motherboard, GX Display, OCA Glass and OCA Sheets.
             </p>
             <div className="flex justify-center">
               <button
@@ -30,7 +30,7 @@ const SlideCard = () => {
             <img
               className="object-cover object-center rounded"
               alt="hero"
-              src={Sdata[0].cover}
+              src="https://firebasestorage.googleapis.com/v0/b/applefixzone01.appspot.com/o/Displays%2FIPHONE-XS-MAX-COMBO-500x500.png?alt=media&token=71d8e48a-b259-49bc-8c2b-541a1e4f03b9"
             />
           </div>
         </div>
