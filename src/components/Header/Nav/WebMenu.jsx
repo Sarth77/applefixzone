@@ -42,7 +42,7 @@ const WebMenu = ({ links }) => {
       </div>
       {openCategory ? (
         <div className="absolute left-[5%] z-999 ">
-          <Categories />
+          <Categories close={() => setOpenCategory(false)} />
         </div>
       ) : (
         <></>

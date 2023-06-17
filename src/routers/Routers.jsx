@@ -15,6 +15,7 @@ import RequireAuth from "../components/auth/RequireAuth";
 import Products from "../pages/Products";
 import FAQ from "../pages/FAQ";
 import AboutUs from "../pages/AboutUs";
+import Category from "../pages/Category";
 const Routers = () => {
   return (
     <Routes>
@@ -23,6 +24,7 @@ const Routers = () => {
       <Route path="/products" element={<Products />} />
       <Route path="/cart" element={<Cart />} />
       <Route path="/checkout" element={<Checkout />} />
+      <Route path="/category/:id" element={<Category />} />
       <Route path="/products/:id" element={<ProductDetails />} />
       <Route
         path="/login"

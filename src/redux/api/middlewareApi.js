@@ -12,6 +12,9 @@ export const middlewareApi = createApi({
     getSingleProduct: builder.query({
       query: (name) => `/api/products/${name}`,
     }),
+    getCategories: builder.query({
+      query: (name) => `/api/categories/${name}`,
+    }),
     signinUser: builder.mutation({
       query: ({ email, password }) => {
         return {
@@ -86,6 +89,7 @@ export const middlewareApi = createApi({
 export const {
   useGetProductsQuery,
   useGetSingleProductQuery,
+  useGetCategoriesQuery,
   useSigninUserMutation,
   useSignupUserMutation,
   useSendMailForVerificationMutation,
