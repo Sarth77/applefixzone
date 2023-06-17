@@ -21,8 +21,12 @@ const Footer = () => {
             <NavLink to="/products">
               <span className="text-gray">Products</span>
             </NavLink>
-            <span className="text-gray">FAQ</span>
-            <span className="text-gray">About Us</span>
+            <NavLink to="/faq">
+              <span className="text-gray">FAQ</span>
+            </NavLink>
+            <NavLink to="/about">
+              <span className="text-gray">About Us</span>
+            </NavLink>
             <NavLink to="/contact">
               <span className="text-gray">Contact Us</span>
             </NavLink>
@@ -30,19 +34,21 @@ const Footer = () => {
           <div className="hidden  md:flex flex-1 flex-col gap-[10px] text-justify text-[14px]">
             <h1 className="text-[18px] font-bold text-gray-500">About</h1>
             <span className="text-gray">
-              Lorem, ipsum dolor sit amet consectetur adipisicing elit. Id amet
-              odit fuga doloremque facere laudantium minima impedit voluptates
-              eos accusamus? Soluta quod numquam id et beatae aperiam incidunt!
-              Accusantium, aperiam.
+              We are Providing Original iPhone Spares, iPhone Displays, iPhone
+              Charging Port, iPad Original Spares, iPhone Batteries, iPhone
+              Motherboard, iPhone GX Display, iPhone OCA Glass and OCA Sheets.
             </span>
           </div>
           <div className="hidden md:flex flex-1 flex-col gap-[10px] text-justify text-[14px]">
             <h1 className="text-[18px] font-bold text-gray-500">Contact</h1>
             <span className="text-gray">
-              Lorem, ipsum dolor sit amet consectetur adipisicing elit. Id amet
-              odit fuga doloremque facere laudantium minima impedit voluptates
-              eos accusamus? Soluta quod numquam id et beatae aperiam incidunt!
-              Accusantium, aperiam.
+              Whenever you are browsing our site and are in doubt about
+              something, we are always willing to share our deep knowledge and
+              understanding of our makers, their craft and any technical
+              assistance related to website. The most commonly asked questions
+              are covered in our FAQs. If you have any specific questions please
+              do not hesitate to contact us by writing us an email at
+              support@applefixzone.com or messaging our customer services team.
             </span>
           </div>
         </div>

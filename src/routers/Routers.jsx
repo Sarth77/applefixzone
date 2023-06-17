@@ -13,17 +13,19 @@ import ErrorPage from "../pages/Error";
 import AuthRedirect from "../components/auth/AuthRequire";
 import RequireAuth from "../components/auth/RequireAuth";
 import Products from "../pages/Products";
+import FAQ from "../pages/FAQ";
+import AboutUs from "../pages/AboutUs";
 const Routers = () => {
   return (
     <Routes>
       <Route path="/" element={<Navigate to="home" />} />
-      <Route path="home" element={<Home />} />
-      <Route path="products" element={<Products />} />
-      <Route path="cart" element={<Cart />} />
-      <Route path="checkout" element={<Checkout />} />
-      <Route path="products/:id" element={<ProductDetails />} />
+      <Route path="/home" element={<Home />} />
+      <Route path="/products" element={<Products />} />
+      <Route path="/cart" element={<Cart />} />
+      <Route path="/checkout" element={<Checkout />} />
+      <Route path="/products/:id" element={<ProductDetails />} />
       <Route
-        path="login"
+        path="/login"
         element={
           <AuthRedirect>
             <Login />
@@ -31,7 +33,7 @@ const Routers = () => {
         }
       />
       <Route
-        path="signup"
+        path="/signup"
         element={
           <AuthRedirect>
             <SignUp />
@@ -46,8 +48,10 @@ const Routers = () => {
           </RequireAuth>
         }
       />
-      <Route path="contact" element={<ContactUs />} />
-      <Route path="track" element={<Track />} />
+      <Route path="/contact" element={<ContactUs />} />
+      <Route path="/track" element={<Track />} />
+      <Route path="/faq" element={<FAQ />} />
+      <Route path="/about" element={<AboutUs />} />
       <Route path="*" element={<ErrorPage />} />
     </Routes>
   );

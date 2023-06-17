@@ -7,16 +7,16 @@ const navlinks = [
     display: "Home",
   },
   {
-    path: "products",
+    path: "/products",
     display: "Products",
   },
   {
-    path: "user",
-    display: "User Account",
+    path: "/faq",
+    display: "FAQ's",
   },
   {
-    path: "track",
-    display: "Track Order",
+    path: "/about",
+    display: "About Us",
   },
   {
     path: "contact",

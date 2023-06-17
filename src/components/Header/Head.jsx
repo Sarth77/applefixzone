@@ -23,7 +23,9 @@ const Head = () => {
           </div>
           <div className="flex items-center flex-wrap">
             <div className="flex items-center justify-between">
-              <span className="mr-[30px] text-sm">FAQ's</span>
+              <NavLink to="/faq">
+                <span className="mr-[30px] text-sm">FAQ's</span>
+              </NavLink>
               <NavLink to="/contact">
                 <span className="mr-[30px] text-sm">Need Help</span>
               </NavLink>

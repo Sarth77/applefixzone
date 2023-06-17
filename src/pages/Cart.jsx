@@ -31,7 +31,7 @@ const Cart = () => {
 
   return (
     <>
-      <div className="snap-start max-w-[90%] m-auto py-12">
+      <div className="snap-y max-w-[90%] m-auto py-12 scro">
         <div className="w-full p-4 bg-white border border-gray-200 rounded-lg shadow sm:p-8">
           <div className="flex items-center justify-between mb-4">
             <h5 className="text-xl font-bold leading-none text-gray-900">
@@ -40,22 +40,24 @@ const Cart = () => {
           </div>
           {cart.cartItems.length === 0 ? (
             <div className="snap-start max-w-[90%] m-auto flex flex-col gap-4 items-center justify-center">
-              <div className="min-h-[25vh] snap-start">
+              <div className="min-h-[30vh] flex flex-col items-center justify-center">
                 <p>Your cart is empty !</p>
-                <NavLink to="/products">
-                  <div className="font-medium text-indigo-600 hover:text-indigo-500 flex items-center justify-center gap-1">
-                    <BiArrowBack />
-                    Go to products
-                  </div>
-                </NavLink>
+                <div>
+                  <NavLink to="/products">
+                    <div className="font-medium text-indigo-600 hover:text-indigo-500 flex items-center justify-center gap-1">
+                      <BiArrowBack />
+                      Go to products
+                    </div>
+                  </NavLink>
+                </div>
               </div>
             </div>
           ) : (
             <div className="flow-root">
-              <ul className="divide-y divide-gray-200 dark:divide-gray-700 overflow-hidden">
+              <ul className="divide-y divide-gray-200 dark:divide-gray-700 overflow-hidden snap-start">
                 {cart.cartItems?.map((cartItem) => (
                   <li
-                    className="flex lg:flex-row md:flex-row flex-col py-6 gap-4"
+                    className="flex lg:flex-row md:flex-row flex-col py-6 gap-4 snap-start"
                     key={cartItem.id}
                   >
                     <div className="h-full w-full lg:h-24 lg:w-24 md:h-24 md:w-24 flex-shrink-0 overflow-hidden rounded-md border border-gray-200 self-center ">
