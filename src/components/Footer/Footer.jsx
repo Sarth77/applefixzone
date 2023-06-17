@@ -8,9 +8,16 @@ const Footer = () => {
         <div className="flex gap-[50px] justify-between">
           <div className="flex-1 flex flex-col gap-[10px] text-justify text-[14px]">
             <h1 className="text-[18px] font-bold text-gray-500">Categories</h1>
-            <span className="text-gray">Motherboards</span>
-            <span className="text-gray">Displays</span>
-            <span className="text-gray">Batteries</span>
+            <NavLink to="/category/Boards">
+              <span className="text-gray">Motherboards</span>
+            </NavLink>
+            <NavLink to="/category/display">
+              <span className="text-gray">Screens</span>
+            </NavLink>
+            <NavLink to="/category/battery">
+              <span className="text-gray">Batteries</span>
+            </NavLink>
+            {/* New Products can be added here */}
             <span className="text-gray">Others</span>
           </div>
           <div className="flex-1 flex flex-col gap-[10px] text-justify text-[14px]">
