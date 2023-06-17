@@ -42,7 +42,7 @@ const MobileMenu = ({ links }) => {
       )}
       {openCategory ? (
         <div className="absolute left-[5%] rounded">
-          <Categories />
+          <Categories close={() => setOpenCategory(false)} />
         </div>
       ) : (
         <></>
