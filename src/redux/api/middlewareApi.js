@@ -3,7 +3,7 @@ import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 // Define a service using a base URL and expected endpoints
 export const middlewareApi = createApi({
   reducerPath: "middlewareApi",
-  baseQuery: fetchBaseQuery({ baseUrl: "https://api-9av6.onrender.com" }),
+  baseQuery: fetchBaseQuery({ baseUrl: "https://api.applefixzone.com" }),
   keepUnusedDataFor: 60,
   endpoints: (builder) => ({
     getProducts: builder.query({
