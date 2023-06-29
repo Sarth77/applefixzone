@@ -43,7 +43,7 @@ import axios from "axios";
 export const getAllProducts = createAsyncThunk("getAllProducts", async () => {
   try {
     const response = await axios.get(
-      "https://api-9av6.onrender.com/api/products",
+      "https://api.applefixzone.com/api/products",
     );
     return response.data.data;
   } catch (error) {
