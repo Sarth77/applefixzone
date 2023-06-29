@@ -1,7 +1,7 @@
 import axios from "axios";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 
-const backendURL = "https://api-9av6.onrender.com";
+const backendURL = "https://api.applefixzone.com";
 
 export const registerUser = createAsyncThunk(
   "/api/auth/signup",
