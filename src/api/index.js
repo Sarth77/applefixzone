@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const baseURL = "https://api-9av6.onrender.com";
+const baseURL = "https://api.applefixzone.com";
 
 export const validateGoogleToken = async (token) => {
   try {
